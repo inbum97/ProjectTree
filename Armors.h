@@ -1,9 +1,12 @@
-#include <string>
 
 #ifndef ARMOR_H
 #define ARMOR_H
+#include <string>
+#include "BinarySearchTree.h"
+#include <iostream>
 
 using namespace std;
+class Armors;
 
 class Armors
 {
@@ -67,7 +70,7 @@ public:
 		weapons(weap),
 		precede(precedeModel),
 		succeed(succeedModel) {};
-
+	
 	// Setters
 	void setCodeName(string cn) { codename = cn; }
 	void setArmorType(string at) { armorType = at; }
@@ -77,12 +80,14 @@ public:
 	int isIntGood(int a, Armors*);
 
 	// Operator functions
-	friend bool operator<(const Armors& a1, const Armors& a2) { return a1.codename < a2.codename; }
-	friend bool operator>(const Armors& a1, const Armors& a2) { return a1.codename > a2.codename; }
-	friend bool operator==(const Armors& a1, const Armors& a2) { return a1.codename == a2.codename; }
+
+	friend bool operator==( Armors& a1,  Armors& a2) { return a1.codename == a2.codename; }
 	friend istream& getline(istream& in, Armors *armor);
 
 };
+
+
+//Overloaded Operator
 istream& getline(istream& in, Armors* armor) {
 	cout << "Enter the Codename: ";
 	getline(in, armor->codename);

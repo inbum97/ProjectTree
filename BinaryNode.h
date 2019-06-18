@@ -9,7 +9,7 @@
 class BinaryNode
 {
 private:
-	Armors*  armor;         // Data portion
+	Armors *armor; // Data portion
 	BinaryNode* leftPtr;		// Pointer to left child
 	BinaryNode* rightPtr;		// Pointer to right child
 
