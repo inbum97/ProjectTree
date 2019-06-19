@@ -42,6 +42,8 @@ public:
 	}
 	// Getters
 	string getCodeName() { return codename; }
+	string getCodename() { return codename; }
+
 	string getArmorType() { return armorType; }
 	string getCreator() { return creator; }
 	string getUser() { return users; }
@@ -73,6 +75,8 @@ public:
 	
 	// Setters
 	void setCodeName(string cn) { codename = cn; }
+	void setCodename(string cn) { codename = cn; }
+
 	void setArmorType(string at) { armorType = at; }
 	//string getUnikey() { return codename; }
 	// Other functions
