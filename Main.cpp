@@ -22,7 +22,8 @@ void listSubmenu(TreeType& bst);
 void processChoice(TreeType& bst);
 string inputKey();
 
-void insertToTree(TreeType& bst);	// ADD data
+void insertToTreeP(TreeType& bst);	// ADD data
+
 void delData(TreeType& bst);		// DELETE data
 
 									// search data
@@ -36,7 +37,8 @@ void breadthTraversal(TreeType& bst);
 void preOrderTraversal(TreeType& bst);
 void inOrderTraversal(TreeType& bst);
 void postOrderTraversal(TreeType& bst);
-void printTree(TreeType& bst);
+void printLevel(int level, int space);
+
 
 
 
@@ -47,8 +49,6 @@ void printTree(TreeType& bst);
 //}
 
 void display(Armors* a) {
-	cout << "I am in display func\n";
-	cout << a->getCodename() << " " << a->getYear() << endl;
 	cout << "--------------------------------------------------------------------------" << endl;
 	cout << a->getCodename() << ":" << a->getArmorType() << "\nMade by: " << a->getCreator() << " in " << a->getYear()
 		<< "\nUsers: " << a->getUser() << ", appeared in: " << a->getMovie() << "\nCurrent Status: " << a->getStatus()
@@ -57,19 +57,22 @@ void display(Armors* a) {
 	cout << "\n--------------------------------------------------------------------------" << endl;
 }
 
+void displayTree(Armors * A) {
+	cout << A->getCodename() << ": " << A->getArmorType() << " created by - " << A->getCreator() << endl<<endl;
+}
+
 void displayCodenames(Armors* item)
 {
 	cout << right << setw(20) << item->getCodename() << " -" << item->getArmorType() << endl;
 }
 
-void displayTree(Armors* item, int level)
-{
-	// print 'level'  TABs to make indention
-	for (int i = 0; i < level; ++i)
-	{
-		cout << "\t";
-	}
-	cout << "Level " << level + 1 << ". " << item << endl;
+
+
+/********************************************
+This function prints out the level of node
+********************************************/
+void printLevel(int level, int space) {
+	cout << setw(space) << "Level " << level << ". ";
 }
 
 
@@ -82,8 +85,16 @@ int main()
 	TreeType bstS;
 	fileInput(inputFileName, bstP, bstS);
 
-	menu();
-	processChoice(bstS);
+	//menu();
+	//processChoice(bstS);
+	bstP.printTree(displayTree, printLevel);
+	cout << "\n**************************************************************\n";
+	//bstS.printTree(displayTree, printLevel);
+	bstP.deleteRoot();
+	cout << "\n**************************************************************\n";
+
+	bstP.printTree(displayTree, printLevel);
+
 
 }
 
@@ -280,7 +291,7 @@ void processChoice(TreeType& bst)
 	switch (x)
 	{
 	case 1: // add function
-		insertToTree(bst);
+		insertToTreeP(bst);
 		break;
 	case 2: // delete function
 		delData(bst);
@@ -352,7 +363,7 @@ string inputKey()
 // Insert manager: 
 //		insert data of armor by the user into the list
 // **********************************************************************/
-void insertToTree(TreeType& bst)
+void insertToTreeP(TreeType& bst)
 {
 	Armors* A1;
 	A1 = new Armors;
@@ -401,6 +412,35 @@ void insertToTree(TreeType& bst)
 		Armors* A;
 		A = new Armors(codename, armorType, creator, yearMade, users, movieAppeared, currStats, capabilities, weapons, precede, succeed);
 		bst.insert(A);
+
+	/*	string targetName = "";
+		Armors *A = new Armors;
+		Armors *A2 = new Armors;
+		A2->setCodeName("");
+
+		cout << "\n Insert\n";
+		cout << "=======\n";
+
+		while (A2->getCodeName() != "Q")
+		{
+			cout << endl << "Enter an armor name to insert (or Q for stop inserting):";
+			getline(cin, targetName);
+			A2->setCodeName(targetName);
+			cout << endl;
+			if (A2->getCodeName() != "Q")
+			{
+				if (bst.getEntry(A2, A))
+					cout << "Armor " << targetName << " is already in this Hash Table.";
+				else {
+					cout << "Enter the information of the Armor" << endl;
+					getline(cin, A);
+					if (bst.insert(A))
+						cout << "\nInserted" << endl;
+				}
+			}
+		}
+		cout << endl;
+		cout << "___________________END INSERT SECTION _____\n";*/
 
 		// Write to file
 		/*

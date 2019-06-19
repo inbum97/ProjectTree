@@ -22,7 +22,7 @@ private:
 	BinaryNode* deleteNode(BinaryNode* targetNodePtr);
 
 	// remove the leftmost node in the left subtree of nodePtr
-	BinaryNode* removeLeftmostNode(BinaryNode* nodePtr, Armors* successor);
+	BinaryNode* removeLeftmostNode(BinaryNode* nodePtr, Armors*& successor);
 
 	// search for target node
 	BinaryNode* findNode(BinaryNode* treePtr, Armors* target) const;
@@ -38,6 +38,7 @@ public:
 	// find a target node
 	bool getEntry(Armors* target, Armors*& returnedItem) const;
 	bool getEntrySec(Armors* target, void visit(Armors*)) const;
+	void deleteRoot();
 
 };
 
@@ -70,8 +71,11 @@ bool BinarySearchTree::insertSec(Armors* newentry)
 //Removing items within a tree
 bool BinarySearchTree::remove(Armors* target)
 {
+	cout << "I am about to call _remove\n";
 	bool isSuccessful = false;
 	this->rootPtr = _remove(this->rootPtr, target, isSuccessful);
+	cout << this->rootPtr->getItem()->getCodeName() << endl;
+
 	return isSuccessful;
 }
 
@@ -180,27 +184,34 @@ BinaryNode* BinarySearchTree::_remove(BinaryNode* nodePtr,
 	bool& success)
 
 {
+	cout << "I am in _Remove\n";
 	Armors* rootItem = nodePtr->getItem();
 	cout << endl;
 	if (nodePtr == 0)
 	{
+		cout << "Nodeptr is null\n";
 		success = false;
 		return 0;
 	}
 	if (rootItem->getCodename() > target->getCodename())
 	{
+		cout << "Going left\n";
 		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success));
 
 	}
 	else if (rootItem->getCodename() < target->getCodename())
 	{
+		cout << "Going right\n";
+
 		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success));
 	}
 	else
 	{
+		cout << "Found it Im deleting now\n";
+		cout << nodePtr->getItem()->getCodeName() << endl;
 
 		nodePtr = deleteNode(nodePtr);
-
+		cout << "Hi\n";
 		success = true;
 	}
 	return nodePtr;
@@ -242,7 +253,7 @@ BinaryNode* BinarySearchTree::deleteNode(BinaryNode* nodePtr)
 
 //Implementation to remove the left leaf
 BinaryNode* BinarySearchTree::removeLeftmostNode(BinaryNode* nodePtr,
-	Armors* successor)
+	Armors*& successor)
 {
 	if (nodePtr->getLeftPtr() == 0)
 	{
@@ -333,31 +344,11 @@ BinaryNode* BinarySearchTree::findNodeSec(BinaryNode* nodePtr,
 	}
 }
 
-/*
-
-BinaryNode<itemtype>* BinarySearchTree<itemtype>::findNode(BinaryNode<itemtype>* nodeptr,
-const itemtype & target)  const
-{
-BinaryNode<itemtype>* found = nullptr;
-BinaryNode<itemtype>* pWalk;
-pWalk = nodeptr;
-while (pWalk != NULL && pWalk!=found) {
-if (pWalk->getItem()<target)
-pWalk=pWalk->getRightPtr();
-else
-if (pWalk->getItem() >target)
-pWalk=pWalk->getLeftPtr();
-else {
-found = pWalk;
-visit(found);
-findNode(found, target);
-}
-}
-return found;
+void BinarySearchTree::deleteRoot() {
+	cout << "Im in delete root fun\n";
+	remove(this->rootPtr->getItem());
 }
 
-*/
-//}
 
 
 

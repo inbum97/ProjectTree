@@ -15,7 +15,6 @@ public:
 	BinaryTree() { rootPtr = 0; count = 0; }
 	BinaryTree(const BinaryTree* tree) { }
 	//virtual ~BinaryTree() { }
-	//BinaryTree & operator = (const BinaryTree & sourceTree);
 
 	// common functions for all binary trees
 	bool isEmpty() const { return count == 0; }
@@ -29,7 +28,7 @@ public:
 	// abstract functions to be implemented by derived class
 	virtual bool insert(Armors* newData) = 0;
 	virtual bool remove(Armors * data) = 0;
-	//virtual bool getEntry(const Armors * anEntry, Armors *& returnedItem) const = 0;
+	virtual bool getEntry( Armors * anEntry, Armors *& returnedItem) const = 0;
 
 	// search for the smallest
 	// void findSmall(void visit(ItemType&)) { _findSmall(visit,rootPtr); }
